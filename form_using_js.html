@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript form</title>
+</head>
+<body>
+    <script src="dir/file3.js" ></script>
+    <h1>Main heading</h1>
+    <h1>Student form</h1>
+    <form action="reg.html" name="register">
+
+    Student Name : <input type="text" name="sname"><p id="nval" style="display:inline;"></p> <br>
+    Age : <input type="text" name="age"><p id="ageval" style="display:inline;"></p>
+    <input type="submit" id="btn" value="Submit" disabled>
+    </form>
+
+    <script>
+        var nval =document.getElementById("nval");
+        var ageval=document.getElementById("ageval");
+        let isNameValid=false,isAgeValid=false;
+
+        document.forms["register"]["sname"].addEventListener("blur",valName);
+        document.forms["register"]["age"].addEventListener("blur",valAge);
+
+        document.forms["register"]["sname"].addEventListener("focus",nameReq);
+        document.forms["register"]["age"].addEventListener("focus",ageReq);
+
+        let formelems = document.forms["register"].elements;
+        
+        for (var i = 0; i < formelems.length; i++) {
+                    formelems[i].addEventListener("blur",checkAll);
+            }
+        function checkAll(){
+                if(isNameValid && isAgeValid)
+                    document.getElementById("btn").disabled = false;
+            }
+        function nameReq(){
+                nval.innerHTML = "Name must contain more than 1 character.";
+                nval.style.color = "green";
+            }
+        function ageReq(){
+                ageval.innerHTML = "Age must be any positive numeric value less than 120";
+                ageval.style.color = "green";
+            }
+        function valName(){
+                let s = document.forms["register"]["sname"].value;
+                if(s===null || s=="" || s.length < 2){
+                    nval.innerHTML = "Name must contain more than 1 character.";
+                    nval.style.color = "red";
+                }
+                else{
+                    nval.innerHTML = "";
+                    isNameValid = true;
+                }
+            }
+        function valAge(){
+                let a = parseInt(document.forms["register"]["age"].value);
+                if(a < 0 || a > 120 || isNaN(a) || a===null || a===undefined){
+                    ageval.innerHTML = "Age must be in range 0 to 120";
+                    ageval.style.color = "red";
+                }
+                else{
+                    ageval.innerHTML = "";
+                    isAgeValid = true;
+                }
+        }
+    </script>
+
+
+</body>
+</html>
